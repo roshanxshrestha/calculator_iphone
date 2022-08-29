@@ -38,6 +38,26 @@ class _CalculatorState extends State<Calculator> {
     );
   }
 
+  Widget calcbutton0(String btntxt, Color btncolor, Color txtcolor) {
+    return Container(
+      child: RaisedButton(
+        padding: EdgeInsets.fromLTRB(34, 20, 128, 20),
+        onPressed: () {
+          calculation(btntxt);
+        },
+        shape: StadiumBorder(),
+        child: Text(
+          btntxt,
+          style: TextStyle(
+            fontSize: 35,
+            color: txtcolor,
+          ),
+        ),
+        color: Color.fromARGB(255, 66, 66, 66),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,8 +112,9 @@ class _CalculatorState extends State<Calculator> {
                 //button functions are called here as some arguments are passed
                 calcbutton("7", Color.fromARGB(255, 66, 66, 66), Colors.white),
                 calcbutton("8", Color.fromARGB(255, 66, 66, 66), Colors.white),
-                calcbutton("9", Color.fromARGB(255, 66, 66, 66), Colors.white),
-                calcbutton("×", Color.fromARGB(255, 255, 160, 0), Colors.white),
+                calcbutton("9", Color.fromARGB(255, 66, 66, 66),
+                    Color.fromRGBO(255, 255, 255, 1)),
+                calcbutton("x", Color.fromARGB(255, 255, 160, 0), Colors.white),
               ],
             ),
             SizedBox(
@@ -129,19 +150,7 @@ class _CalculatorState extends State<Calculator> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                RaisedButton(
-                  padding: EdgeInsets.fromLTRB(34, 20, 128, 20),
-                  onPressed: () {},
-                  shape: StadiumBorder(),
-                  child: Text(
-                    "0",
-                    style: TextStyle(
-                      fontSize: 35,
-                      color: Colors.white,
-                    ),
-                  ),
-                  color: Colors.grey[850],
-                ),
+                calcbutton0("0", Color.fromARGB(255, 66, 66, 66), Colors.white),
                 calcbutton(".", Color.fromARGB(255, 66, 66, 66), Colors.white),
                 calcbutton("=", Color.fromARGB(255, 255, 160, 0), Colors.white),
               ],
@@ -177,13 +186,13 @@ class _CalculatorState extends State<Calculator> {
         finalResult = sub();
       } else if (preOpr == 'x') {
         finalResult = mul();
-      } else if (preOpr == '/') {
+      } else if (preOpr == '÷') {
         finalResult = div();
       }
     } else if (btnText == '+' ||
         btnText == '-' ||
         btnText == 'x' ||
-        btnText == '/' ||
+        btnText == '÷' ||
         btnText == '=') {
       if (numOne == 0) {
         numOne = double.parse(result);
@@ -197,13 +206,13 @@ class _CalculatorState extends State<Calculator> {
         finalResult = sub();
       } else if (opr == 'x') {
         finalResult = mul();
-      } else if (opr == '/') {
+      } else if (opr == '÷') {
         finalResult = div();
       }
       preOpr = opr;
       opr = btnText;
       result = '';
-    } else if (btnText == '%') {
+    } else if (btnText == '÷') {
       result = numOne / 100;
       finalResult = doesContainDecimal(result);
     } else if (btnText == '.') {
@@ -211,7 +220,7 @@ class _CalculatorState extends State<Calculator> {
         result = result.toString() + '.';
       }
       finalResult = result;
-    } else if (btnText == '+/-') {
+    } else if (btnText == '⁺/₋') {
       result.toString().startsWith('-')
           ? result = result.toString().substring(1)
           : result = '-' + result.toString();
